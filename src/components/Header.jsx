@@ -6,7 +6,7 @@ const Header = () => {
     <>
       <header className="bg-primary text-white flex justify-between items-center p-5 md:p-10">
         <NavLink to="/" >
-          <img src={logo} className="md:w-20 w-16" />
+          <img src={logo} className="md:w-20 w-12" />
         </NavLink>
         <nav>
           <NavLink to="/" className={({ isActive }) =>
