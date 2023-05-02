@@ -8,7 +8,7 @@ const Home = () => {
   return (
     <>
       <Header />
-      <main className='flex justify-center items-center py-28 flex-col bg-primary text-white'>
+      <main className='flex justify-center items-center py-28 flex-col bg-primary text-neutral-50'>
         <img src={headerImage} className='w-full md:w-1/5' />
         <div className='text-center md:px-10 px-5 my-3'>
           <h2 className='md:text-3xl text-2xl font-semibold md:px-5 px-0'>Move Around Campus Swiftly</h2>
