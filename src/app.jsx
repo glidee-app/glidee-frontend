@@ -1,6 +1,7 @@
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Auth from "./components/Auth";
+import Guest from "./components/Guest";
 import BookRide from "./pages/BookRide";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
@@ -12,8 +13,10 @@ export default function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route element={<Guest />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+        </Route>
         <Route element={<Auth />}>
           <Route path="/dashboard" element={<Dashboard />} />
           {/* <Route path="/order-history" element={<OrderHistory />} /> */}

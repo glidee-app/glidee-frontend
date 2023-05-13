@@ -1,12 +1,17 @@
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
+import auth from "../services/auth";
+import { decodeToken } from "react-jwt";
 
 const Dashboard = () => {
+
+  const user = decodeToken(auth.getCurrentUser()?.token)
+
   return (
     <>
       <Header />
       <main className='flex justify-center items-center py-28 flex-col bg-primary text-neutral-50'>
-        <h2>Hello, Quyum</h2>
+        <h2>Hello, {user.sub.user_name}</h2>
         <div className='flex justify-between items-center w-full md:w-2/5 font-medium my-28'>
           <Link to="/book-ride" className='p-10 px-4 rounded-lg border border-white'>Book Ride</Link>
           <Link to="/ride-history" className='p-10 px-4 rounded-lg border border-secondary bg-secondary'>View Order History</Link>
