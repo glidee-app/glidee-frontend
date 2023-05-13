@@ -15,9 +15,9 @@ const Home = () => {
           <span className='text-gray-400'>Experience Stress-Free Commuting On Campus With Glidee</span>
         </div>
         <img src={locationImage} className='w-full md:w-1/5 mt-2' />
-        <div className='flex justify-between items-center w-full md:w-1/5 font-medium mt-7'>
-          <Link to="/signup" className='p-2 px-4 rounded-r-full rounded-l-full border border-white ml-20'>Join Glidee</Link>
-          <Link to="/login" className='p-2 px-6 rounded-r-full rounded-l-full border border-secondary bg-secondary mr-20 '>Sign in</Link>
+        <div className='flex justify-between md:justify-center items-center w-full md:w-2/5 font-medium mt-7'>
+          <Link to="/signup" className='p-2 px-4 rounded-r-full rounded-l-full border border-white ml-20 mr-2'>Join Glidee</Link>
+          <Link to="/login" className='p-2 px-6 rounded-r-full rounded-l-full border border-secondary bg-secondary mr-20 ml-2'>Sign in</Link>
         </div>
       </main>
     </>
