@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import auth from "../services/auth";
-import { decodeToken } from "react-jwt";
 
 const Dashboard = () => {
 
-  const user = decodeToken(auth.getCurrentUser()?.token)
+  const user = auth.getCurrentUser()
 
   return (
     <>

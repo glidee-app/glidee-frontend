@@ -6,6 +6,7 @@ import BookRide from "./pages/BookRide";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import Logout from "./pages/Logout";
 import Signup from "./pages/Signup";
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           {/* <Route path="/order-history" element={<OrderHistory />} /> */}
           <Route path="/book-ride" element={<BookRide />} />
+          <Route path="/logout" element={<Logout />} />
         </Route>
       </Routes>
     </Router>

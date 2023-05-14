@@ -32,8 +32,11 @@ const Header = () => {
                 `${isActive && "text-gray-300"} p-3`
               }>Book Ride</NavLink>
               <NavLink to="/signup" className={({ isActive }) =>
-                `${isActive && "text-gray-300"} p-3 pr-0`
+                `${isActive && "text-gray-300"} p-3`
               }>Ride History</NavLink>
+              <NavLink to="/logout" className={({ isActive }) =>
+                `${isActive && "text-gray-300"} p-3 pr-0 text-red-500`
+              }>Logout</NavLink>
             </>
           }
         </nav>

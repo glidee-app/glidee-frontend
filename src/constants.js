@@ -1,1 +1,2 @@
-export const BE_BASE_URL = "https://glidee-api.onrender.com";
+export const BE_BASE_URL = "http://localhost:5000";
+

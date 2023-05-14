@@ -43,7 +43,7 @@ const Signup = () => {
             {errors.last_name && <span> {errors.last_name?.message}</span>}
             <input {...register("password", { required: true })} type="password" placeholder="Enter your password" className="border border-gray-300 p-3 rounded-r-full rounded-l-full w-full my-1.5" />
             {errors.password && <span> {errors.password?.message}</span>}
-            <input {...register("password_confirm", { required: true })} type="text" placeholder="Re-type your password" className="border border-gray-300 p-3 rounded-r-full rounded-l-full w-full my-1.5" />
+            <input {...register("password_confirm", { required: true })} type="password" placeholder="Re-type your password" className="border border-gray-300 p-3 rounded-r-full rounded-l-full w-full my-1.5" />
             {errors.password_confirm && <span> {errors.password_confirm?.message}</span>}
             <button type="submit" className="bg-primary w-full text-neutral-50 p-3 rounded-r-full rounded-l-full mt-7">Sign up</button>
           </form>

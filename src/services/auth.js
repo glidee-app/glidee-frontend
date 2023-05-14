@@ -1,17 +1,21 @@
+import { decodeToken } from "react-jwt";
+
 class AuthService {
 
   logout() {
     localStorage.removeItem("user");
+    return true;
   }
 
   getCurrentUser() {
-    return JSON.parse(localStorage.getItem('user'));
+    const token = JSON.parse(localStorage.getItem('user'))?.token;
+    return decodeToken(token);
   }
 
   getAuthHeader() {
-    const user = this.getCurrentUser()
-    if (user && user.token) {
-      return { Authorization: `Bearer ${user.token}` }
+    const token = JSON.parse(localStorage.getItem('user'))?.token
+    if (token) {
+      return { Authorization: `Bearer ${token}` }
     }
     return {}
   }
