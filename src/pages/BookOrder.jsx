@@ -6,7 +6,7 @@ import Header from "../components/Header";
 import { BE_BASE_URL } from "../constants";
 import auth from "../services/auth";
 
-const BookRide = () => {
+const BookOrder = () => {
   const { register, handleSubmit, reset } = useForm();
   const [orderErrors, setOrderErrors] = useState([])
   const [orderSuccess, setOrderSuccess] = useState(false)
@@ -66,7 +66,7 @@ const BookRide = () => {
             <span key={index} className="text-red-500 my-2">{error}</span>
           ))}
           {orderSuccess &&
-            <span className="text-green-500 my-2">You ride has been booked! View <Link to="/order-hostory" className="underline">order history</Link></span>
+            <span className="text-green-500 my-2">You ride has been booked! View <Link to="/order-history" className="underline">order history</Link></span>
           }
           <div className="text-left my-3">
             <label htmlFor="" className="font-medium">Where would you like to board?</label>
@@ -136,4 +136,4 @@ const BookRide = () => {
   )
 }
 
-export default BookRide;
+export default BookOrder;

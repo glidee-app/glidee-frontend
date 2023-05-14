@@ -31,7 +31,7 @@ const Header = () => {
               <NavLink to="/book-ride" className={({ isActive }) =>
                 `${isActive && "text-gray-300"} p-3`
               }>Book Ride</NavLink>
-              <NavLink to="/signup" className={({ isActive }) =>
+              <NavLink to="/order-history" className={({ isActive }) =>
                 `${isActive && "text-gray-300"} p-3`
               }>Ride History</NavLink>
               <NavLink to="/logout" className={({ isActive }) =>

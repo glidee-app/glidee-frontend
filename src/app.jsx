@@ -2,11 +2,12 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Auth from "./components/Auth";
 import Guest from "./components/Guest";
-import BookRide from "./pages/BookRide";
+import BookOrder from "./pages/BookOrder";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Logout from "./pages/Logout";
+import OrderHistory from "./pages/OrderHistory";
 import Signup from "./pages/Signup";
 
 export default function App() {
@@ -20,8 +21,8 @@ export default function App() {
         </Route>
         <Route element={<Auth />}>
           <Route path="/dashboard" element={<Dashboard />} />
-          {/* <Route path="/order-history" element={<OrderHistory />} /> */}
-          <Route path="/book-ride" element={<BookRide />} />
+          <Route path="/order-history" element={<OrderHistory />} />
+          <Route path="/book-ride" element={<BookOrder />} />
           <Route path="/logout" element={<Logout />} />
         </Route>
       </Routes>
