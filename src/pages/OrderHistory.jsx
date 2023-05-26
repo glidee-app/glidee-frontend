@@ -26,7 +26,7 @@ const OrderHistory = () => {
 
   useEffect(() => {
     fetchOrders()
-  })
+  }, [])
 
   const fetchOrders = async () => {
     axios
@@ -59,8 +59,8 @@ const OrderHistory = () => {
                     <div className="flex flex-col">
                       <span className="text-sm text-gray-500 block">Pickup</span>
                       <h2>{order.pickup_location}</h2>
-                      <span className="text-sm text-gray-500 block mt-3">Date</span>
-                      <p>{order.pickup_datetime}</p>
+                      <span className="text-sm text-gray-500 block mt-3">Date | Time</span>
+                      <p>{order.pickup_date} | {order.pickup_time}</p>
                     </div>
                     <div>
                       <span className="text-sm text-gray-500 block">Destination</span>

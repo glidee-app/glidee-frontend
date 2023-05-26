@@ -10,25 +10,27 @@ const BookOrder = () => {
   const { register, handleSubmit, reset } = useForm();
   const [orderErrors, setOrderErrors] = useState([])
   const [orderSuccess, setOrderSuccess] = useState(false)
-  const [availableVehicles, setAvailableVehicles] = useState([])
+  const [availableRides, setAvailableRides] = useState([])
 
-  const fetchVehicles = async (data) => {
+  const fetchRides = async (data) => {
     setOrderErrors([])
     setOrderSuccess("")
     axios
-      .get(`${BE_BASE_URL}/vehicles`, {
+      .get(`${BE_BASE_URL}/rides`, {
         params: {
           comfortability: data.comfortability,
-          pickup_datetime: data.pickup_datetime,
+          pickup_date: data.pickup_date,
+          pickup_location: data.pickup_location,
+          destination: data.destination,
         },
         headers: auth.getAuthHeader()
       })
       .then(res => {
-        const vehicles = res.data?.data?.vehicles || []
-        if (vehicles.length) {
-          setAvailableVehicles(vehicles)
+        const rides = res.data?.data?.rides || []
+        if (rides.length) {
+          setAvailableRides(rides)
         } else {
-          setOrderErrors(['No vehicle available at the moment.'])
+          setOrderErrors(['No ride available at the moment.'])
         }
       })
       .catch(err => {
@@ -41,15 +43,12 @@ const BookOrder = () => {
     setOrderSuccess("")
     axios
       .post(`${BE_BASE_URL}/order`, {
-        pickup_location: data.pickup_location,
-        vehicle_id: data.vehicle_id,
-        pickup_datetime: data.pickup_datetime,
-        destination: data.destination,
+        ride_id: data.ride_id,
       }, { headers: auth.getAuthHeader() })
       .then(res => {
         setOrderSuccess(res.data?.message);
         reset()
-        setAvailableVehicles([])
+        setAvailableRides([])
       })
       .catch(err => {
         setOrderErrors(err.response.data.errors || [err.response.data.message])
@@ -71,63 +70,56 @@ const BookOrder = () => {
           <div className="text-left my-3">
             <label htmlFor="" className="font-medium">Where would you like to board?</label>
             <select {...register("pickup_location", { required: true })} className="border border-gray-300 bg-white p-3 rounded-r-full rounded-l-full w-full my-1.5">
-              <option value="Main Gate">Main Gate</option>
-              <option value="Under G">Under G bus stop</option>
-              <option value="Adenike">Adenike bus stop</option>
-              <option value="Yoaco">Yoaco bus stop</option>
+              <option value="main gate">Main Gate</option>
+              <option value="under g bus stop">Under G bus stop</option>
+              <option value="adenike bus stop">Adenike bus stop</option>
+              <option value="yoaco bus stop">Yoaco bus stop</option>
             </select>
           </div>
           <div className="text-left my-3">
             <label htmlFor="" className="font-medium">Where would you like to drop?</label>
             <select {...register("destination", { required: true })} className="border border-gray-300 bg-white p-3 rounded-r-full rounded-l-full w-full my-1.5">
-              <option value="Main Gate">Main Gate</option>
-              <option value="Under G">Under G bus stop</option>
-              <option value="Adenike">Adenike bus stop</option>
-              <option value="Yoaco">Yoaco bus stop</option>
+              <option value="main gate">Main Gate</option>
+              <option value="under g bus stop">Under G bus stop</option>
+              <option value="adenike bus stop">Adenike bus stop</option>
+              <option value="yoaco bus stop">Yoaco bus stop</option>
             </select>
           </div>
           <div className="text-left my-3">
             <label htmlFor="" className="font-medium">Select ride type</label>
             <select {...register("comfortability", { required: true })} className="border border-gray-300 bg-white p-3 rounded-r-full rounded-l-full w-full my-1.5">
-              <option value="Shared">Shared</option>
-              <option value="Standard">Standard</option>
+              <option value="standard">Standard</option>
+              <option value="premium">Premium</option>
             </select>
           </div>
           <div className="text-left my-3">
             <label htmlFor="" className="font-medium">Pickup date & time</label>
-            <input type="datetime-local" {...register("pickup_datetime", { required: true })} className="border border-gray-300 bg-white p-3 rounded-r-full rounded-l-full w-full my-1.5" />
+            <input type="date" {...register("pickup_date", { required: true })} className="border border-gray-300 bg-white p-3 rounded-r-full rounded-l-full w-full my-1.5" />
           </div>
           <div>
             {
-              availableVehicles.length
+              availableRides.length
                 ? <>
-                  {availableVehicles.map((vehicle, index) => (
+                  {availableRides.map((ride, index) => (
                     <div key={index}>
-                      <input {...register("vehicle_id", { required: true })} type="radio" value={vehicle.id} id={'vehicle-' + vehicle?.id} />
-                      <label htmlFor={'vehicle-' + vehicle.id} className="block bg-white rounded-xl shadow-lg p-3">
-                        {/* <div>
-                          <span>Pickup</span>
-                          <p>Mancot Park, FUNAAB</p>
-                        </div>
-                        <div>
-                          <span>Destination</span>
-                          <p>College of engineering, FUNAAB</p>
-                        </div> */}
+                      <input {...register("ride_id", { required: true })} type="radio" value={ride.id} id={'ride-' + ride?.id} />
+                      <label htmlFor={'ride-' + ride.id} className="block bg-white rounded-xl shadow-lg p-3">
                         <div className="flex justify-between items-center">
-                          <h2>{vehicle?.make + ' ' + vehicle?.model}</h2>
-                          <p>₦{vehicle?.amount}</p>
+                          <h2>{ride?.vehicle?.make + ' ' + ride?.vehicle?.model}</h2>
+                          <p>₦{ride?.amount}</p>
                         </div>
                         <div className="flex justify-between items-center py-2 text-sm text-gray-500">
-                          <span>License Number: LND 506 CC</span>
-                          <span>Driver: {vehicle?.driver?.name}</span>
+                          <span>License Number: {ride?.vehicle?.license_plate}</span>
+                          <span>Driver: {ride?.driver?.name}</span>
                         </div>
+                        <p className="text-left text-sm">Pickup time: {ride?.pickup_time}</p>
                       </label>
                     </div>
                   ))}
                   <button onClick={handleSubmit(createOrder)} className="bg-primary w-full text-neutral-50 p-3 rounded-r-full rounded-l-full mt-7">Book Ride</button>
                 </>
                 :
-                <button onClick={handleSubmit(fetchVehicles)} className="bg-primary w-full text-neutral-50 p-3 rounded-r-full rounded-l-full mt-7">Show available rides</button>
+                <button onClick={handleSubmit(fetchRides)} className="bg-primary w-full text-neutral-50 p-3 rounded-r-full rounded-l-full mt-7">Show available rides</button>
             }
           </div>
         </form>
