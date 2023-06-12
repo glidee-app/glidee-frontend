@@ -1,4 +1,4 @@
-import { decodeToken } from "react-jwt";
+import { decodeToken, isExpired } from "react-jwt";
 
 class AuthService {
 
@@ -10,6 +10,11 @@ class AuthService {
   getCurrentUser() {
     const token = JSON.parse(localStorage.getItem('user'))?.token;
     return decodeToken(token);
+  }
+
+  isTokenExpired() {
+    const token = JSON.parse(localStorage.getItem('user'))?.token;
+    return isExpired(token);
   }
 
   getAuthHeader() {

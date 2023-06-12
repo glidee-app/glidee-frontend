@@ -7,10 +7,11 @@ const Header = () => {
     <>
       <header className="bg-primary text-white flex justify-between items-center p-5 md:p-10">
         <NavLink to="/" >
-          <img src={logo} className="md:w-20 w-12" />
+          <img src={logo} className="w-12 inline-block mr-2" />
+          <span className="text-2xl font-medium">Glidee</span>
         </NavLink>
         <nav>
-          {!auth.getCurrentUser()
+          {auth.isTokenExpired()
             ?
             <>
               <NavLink to="/" className={({ isActive }) =>

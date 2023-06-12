@@ -16,7 +16,7 @@ const BookOrder = () => {
     setOrderErrors([])
     setOrderSuccess("")
     axios
-      .get(`${BE_BASE_URL}/rides`, {
+      .get(`${BE_BASE_URL}/fetch_rides`, {
         params: {
           comfortability: data.comfortability,
           pickup_date: data.pickup_date,
@@ -42,7 +42,7 @@ const BookOrder = () => {
     setOrderErrors([])
     setOrderSuccess("")
     axios
-      .post(`${BE_BASE_URL}/order`, {
+      .post(`${BE_BASE_URL}/create_order`, {
         ride_id: data.ride_id,
       }, { headers: auth.getAuthHeader() })
       .then(res => {
@@ -58,9 +58,9 @@ const BookOrder = () => {
   return (
     <>
       <Header />
-      <main className='flex items-center justify-center py-28 flex-col bg-neutral-50 text-primary'>
-        <h2 className="font-semibold text-lg text-center">Book a ride</h2>
-        <form className="px-5 max-w-5xl text-left md:text-center py-8">
+      <main className='flex items-center justify-center py-28 flex-col bg-primary text-white'>
+        <h2 className="lg:text-3xl text-2xl font-semibold">Let&apos;s Book Your Ride</h2>
+        <form className="px-5 w-full max-w-4xl text-left md:text-center py-8">
           {orderErrors.map((error, index) => (
             <span key={index} className="text-red-500 my-2">{error}</span>
           ))}
@@ -68,33 +68,34 @@ const BookOrder = () => {
             <span className="text-green-500 my-2">You ride has been booked! View <Link to="/order-history" className="underline">order history</Link></span>
           }
           <div className="text-left my-3">
-            <label htmlFor="" className="font-medium">Where would you like to board?</label>
-            <select {...register("pickup_location", { required: true })} className="border border-gray-300 bg-white p-3 rounded-r-full rounded-l-full w-full my-1.5">
-              <option value="main gate">Main Gate</option>
-              <option value="under g bus stop">Under G bus stop</option>
-              <option value="adenike bus stop">Adenike bus stop</option>
-              <option value="yoaco bus stop">Yoaco bus stop</option>
+            <select {...register("pickup_location", { required: true })} className="border border-gray-300 bg-white p-3 rounded-r-full rounded-l-full w-full my-1.5 text-gray-600">
+              <option value="">Pickup location</option>
+              {
+                ["Harmony", "Cele", "Camp", "Accord", "Gate", "Cele", "Oluwo", "Funis", "Gate", "Accord", "Isolu", "Cele", "Funis"].map((place, index) => (
+                  <option key={index} value={place}>{place}</option>
+                ))
+              }
             </select>
           </div>
           <div className="text-left my-3">
-            <label htmlFor="" className="font-medium">Where would you like to drop?</label>
-            <select {...register("destination", { required: true })} className="border border-gray-300 bg-white p-3 rounded-r-full rounded-l-full w-full my-1.5">
-              <option value="main gate">Main Gate</option>
-              <option value="under g bus stop">Under G bus stop</option>
-              <option value="adenike bus stop">Adenike bus stop</option>
-              <option value="yoaco bus stop">Yoaco bus stop</option>
+            <select {...register("destination", { required: true })} className="border border-gray-300 bg-white p-3 rounded-r-full rounded-l-full w-full my-1.5 text-gray-600">
+              <option value="">Drop-off location</option>
+              {
+                ["Harmony", "Cele", "Camp", "Accord", "Gate", "Cele", "Oluwo", "Funis", "Gate", "Accord", "Isolu", "Cele", "Funis"].map((place, index) => (
+                  <option key={index} value={place}>{place}</option>
+                ))
+              }
             </select>
           </div>
           <div className="text-left my-3">
-            <label htmlFor="" className="font-medium">Select ride type</label>
-            <select {...register("comfortability", { required: true })} className="border border-gray-300 bg-white p-3 rounded-r-full rounded-l-full w-full my-1.5">
-              <option value="standard">Standard</option>
-              <option value="premium">Premium</option>
+            <select {...register("comfortability", { required: true })} className="border border-gray-300 bg-white p-3 rounded-r-full rounded-l-full w-full my-1.5 text-gray-600">
+              <option value="">Select ride type</option>
+              <option value="Standard">Standard</option>
+              <option value="Premium">Premium</option>
             </select>
           </div>
-          <div className="text-left my-3">
-            <label htmlFor="" className="font-medium">Pickup date & time</label>
-            <input type="date" {...register("pickup_date", { required: true })} className="border border-gray-300 bg-white p-3 rounded-r-full rounded-l-full w-full my-1.5" />
+          <div className="text-left my-3 text-gray-600">
+            <input type="date" placeholder="Pickup date" {...register("pickup_date", { required: true })} className="border border-gray-300 bg-white p-3 rounded-r-full rounded-l-full w-full my-1.5" />
           </div>
           <div>
             {
@@ -102,24 +103,27 @@ const BookOrder = () => {
                 ? <>
                   {availableRides.map((ride, index) => (
                     <div key={index}>
-                      <input {...register("ride_id", { required: true })} type="radio" value={ride.id} id={'ride-' + ride?.id} />
-                      <label htmlFor={'ride-' + ride.id} className="block bg-white rounded-xl shadow-lg p-3">
+                      <input {...register("ride_id", { required: true })} type="radio" value={ride.id} id={'ride-' + ride?.id} className="peer" />
+                      <label htmlFor={'ride-' + ride.id} className="block bg-white text-gray-600 peer-checked:bg-blue-500 peer-checked:text-white  rounded-2xl shadow-lg p-3 ">
                         <div className="flex justify-between items-center">
-                          <h2>{ride?.vehicle?.make + ' ' + ride?.vehicle?.model}</h2>
-                          <p>₦{ride?.amount}</p>
+                          <h2 className="font-medium">{ride?.vehicle?.make + ' ' + ride?.vehicle?.model}</h2>
+                          <p className="font-medium">₦{ride?.amount}</p>
                         </div>
-                        <div className="flex justify-between items-center py-2 text-sm text-gray-500">
-                          <span>License Number: {ride?.vehicle?.license_plate}</span>
-                          <span>Driver: {ride?.driver?.name}</span>
+                        <div className="flex justify-between items-center py-2 text-sm">
+                          <p> <span className="font-medium">License No:</span>  {ride?.vehicle?.license_plate}</p>
+                          <p><span className="font-medium">Driver:</span> {ride?.driver?.name}</p>
                         </div>
-                        <p className="text-left text-sm">Pickup time: {ride?.pickup_time}</p>
+                        <div className="flex justify-between items-center py-2 text-sm">
+                          <p className="text-left text-sm"> <span className="font-medium">Time:</span>  {ride?.pickup_time}</p>
+                          <p><span className="font-medium">Contact No:</span> {ride?.driver?.phone_number}</p>
+                        </div>
                       </label>
                     </div>
                   ))}
-                  <button onClick={handleSubmit(createOrder)} className="bg-primary w-full text-neutral-50 p-3 rounded-r-full rounded-l-full mt-7">Book Ride</button>
+                  <button onClick={handleSubmit(createOrder)} className="bg-secondary w-full text-neutral-50 p-3 rounded-r-full rounded-l-full mt-7">Book Ride</button>
                 </>
                 :
-                <button onClick={handleSubmit(fetchRides)} className="bg-primary w-full text-neutral-50 p-3 rounded-r-full rounded-l-full mt-7">Show available rides</button>
+                <button onClick={handleSubmit(fetchRides)} className="bg-secondary w-full text-neutral-50 p-3 rounded-r-full rounded-l-full mt-7">Show available rides</button>
             }
           </div>
         </form>

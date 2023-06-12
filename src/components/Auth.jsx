@@ -2,8 +2,8 @@ import { Navigate, Outlet } from 'react-router-dom';
 import auth from '../services/auth';
 
 const Auth = () =>
-  auth.getCurrentUser()
-    ? <Outlet />
-    : <Navigate to="/login" replace />;
+  auth.isTokenExpired()
+    ? <Navigate to="/login" replace />
+    : <Outlet />
 
 export default Auth;
