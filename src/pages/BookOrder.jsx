@@ -90,8 +90,8 @@ const BookOrder = () => {
           <div className="text-left my-3">
             <select {...register("comfortability", { required: true })} className="border border-gray-300 bg-white p-3 rounded-r-full rounded-l-full w-full my-1.5 text-gray-600">
               <option value="">Select ride type</option>
+              <option value="Shared">Shared</option>
               <option value="Standard">Standard</option>
-              <option value="Premium">Premium</option>
             </select>
           </div>
           <div className="text-left my-3 text-gray-600">
