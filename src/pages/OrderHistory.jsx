@@ -90,7 +90,7 @@ const OrderHistory = () => {
                     </div>
                   </div>
                   {
-                    order.status ?
+                    order.status == 'upcoming_trip' ?
                       <button onClick={() => cancelOrder(order.id)} className="bg-red-800 rounded text-white text-center mt-5">Cancel</button>
                       : ''
                   }
