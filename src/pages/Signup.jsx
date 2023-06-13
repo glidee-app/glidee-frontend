@@ -29,7 +29,7 @@ const Signup = () => {
         <div className="my-7 px-5 max-w-4xl text-center md:text-center">
           <h2 className="md:text-3xl text-2xl font-semibold">Create an account</h2>
           <p className="mt-3">Already have an account? <Link to="/login" className="text-blue-500 font-medium">Sign in</Link></p>
-          <form onSubmit={handleSubmit(onSubmit)} className="my-7">
+          <form onSubmit={handleSubmit(onSubmit)} className="my-7 text-gray-600">
             {signupErrors.map((error, index) => (
               <span key={index} className="text-red-500 my-2">{error}</span>
             ))}
