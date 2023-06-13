@@ -11,8 +11,6 @@ const OrderHistory = () => {
   const [orderType, setOrderType] = useState('upcoming_trip')
 
   const cancelOrder = async (order_id) => {
-    setOrderCancelSuccess('')
-    setOrderCancelErrors([])
     axios
       .post(`${BE_BASE_URL}/cancel_order`, { order_id }, {
         headers: auth.getAuthHeader(),
@@ -30,8 +28,6 @@ const OrderHistory = () => {
   }, [orderType, orderCancelSuccess])
 
   const fetchOrders = async () => {
-    setOrderCancelSuccess('')
-    setOrderCancelErrors([])
     axios
       .get(`${BE_BASE_URL}/order_history`, {
         headers: auth.getAuthHeader(),
@@ -52,7 +48,12 @@ const OrderHistory = () => {
         <div className="max-w-2xl w-full">
           <div className="flex justify-between items-center text-white mb-3">
             <h2 className="font-semibold text-2xl lg:text-3xl">My Bookings</h2>
-            <select onChange={e => setOrderType(e.target.value)} name="" id="" className="bg-secondary rounded-l-full rounded-r-full py-2 px-3">
+            <select onChange={e => {
+              setOrderCancelSuccess('')
+              setOrderCancelErrors([])
+              setOrderType(e.target.value)
+            }
+            } name="" id="" className="bg-secondary rounded-l-full rounded-r-full py-2 px-3">
               <option value="upcoming_trip">Upcoming trips</option>
               <option value="completed_trip">Completed trips</option>
               <option value="cancelled_trip">Cancelled trips</option>
@@ -98,7 +99,7 @@ const OrderHistory = () => {
               ))
               :
               <div>
-                <p className="text-gray-500 text-center my-10">This user is yet does not have any {orderType}.</p>
+                <p className="text-gray-500 text-center my-10">This user does not have any {orderType}.</p>
               </div>
           }
         </div>
