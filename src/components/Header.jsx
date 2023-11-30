@@ -1,3 +1,4 @@
+// Importing necessary modules and components
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
@@ -5,17 +6,22 @@ import { NavLink } from "react-router-dom";
 import logo from '../assets/images/logo.png';
 import auth from "../services/auth";
 
+// Functional component definition
 const Header = () => {
-
+  // State hook to manage the menu's open/close state
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  // JSX markup for the header
   return (
     <>
       <header className="bg-primary text-white flex items-start lg:items-center justify-between p-5 md:p-10">
+        {/* Logo and brand name */}
         <NavLink to="/" className="flex items-center">
-          <img src={logo} className="lg:w-12 w-8 inline-block mr-2" />
+          <img src={logo} className="lg:w-12 w-8 inline-block mr-2" alt="Glidee Logo" />
           <span className="text-2xl font-medium">Glidee</span>
         </NavLink>
+
+        {/* Navigation links based on user authentication status */}
         <nav className="hidden lg:block">
           {auth.isTokenExpired()
             ?
@@ -47,6 +53,8 @@ const Header = () => {
             </>
           }
         </nav>
+
+        {/* Mobile menu button and navigation for smaller screens */}
         <div className="lg:hidden block text-lg">
           <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
             <FontAwesomeIcon icon={faBars} />
@@ -70,4 +78,5 @@ const Header = () => {
   )
 }
 
+// Exporting the Header component
 export default Header;
